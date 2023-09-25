@@ -1,4 +1,4 @@
-package com.englesoft.incentivetimer.ui.timer
+package com.englesoft.incentivetimer.ui.reward
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -15,7 +15,7 @@ import com.englesoft.incentivetimer.R
 import com.englesoft.incentivetimer.ui.theme.IncentiveTimerTheme
 
 @Composable
-fun TimerScreen() {
+fun RewardListScreen() {
     ScreenContent()
 }
 
@@ -25,7 +25,7 @@ private fun ScreenContent() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        Text(stringResource(R.string.timer_screen))
+        Text(stringResource(R.string.reward_list_screen))
     }
 }
 

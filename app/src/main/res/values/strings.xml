@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Incentive Timer</string>
+    <string name="timer_screen">Timer Screen</string>
+    <string name="reward_list_screen">Reward List Screen</string>
+    <string name="timer">Timer</string>
+    <string name="rewards">Rewards</string>
 </resources>
