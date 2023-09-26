@@ -5,17 +5,23 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -45,15 +51,19 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun ScreenContent() {
     val navController = rememberNavController()
+    var selectedItemIndex by rememberSaveable {
+        mutableIntStateOf(0)
+    }
     Scaffold(
         bottomBar = {
-            BottomNavigation {
+            NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
-                bottomNavDestinations.forEach { bottomNavDestination ->
-                    BottomNavigationItem(
-                        selected = currentDestination?.hierarchy?.any { it.route == bottomNavDestination.route } == true,
+                bottomNavDestinations.forEachIndexed { index, bottomNavDestination ->
+                    NavigationBarItem(
+                        selected = selectedItemIndex == index,
                         onClick = {
+                            selectedItemIndex = index
                             navController.navigate(bottomNavDestination.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true
@@ -65,9 +75,11 @@ private fun ScreenContent() {
                         label = {
                             Text(stringResource(bottomNavDestination.label))
                         },
-                        alwaysShowLabel = false,
                         icon = {
-                            Icon(bottomNavDestination.icon, contentDescription = null)
+                            Icon(
+                                if (selectedItemIndex == index) bottomNavDestination.selectedIcon else bottomNavDestination.unselectedIcon,
+                                contentDescription = bottomNavDestination.label.toString()
+                            )
                         },
                     )
                 }
@@ -96,18 +108,21 @@ val bottomNavDestinations = listOf<BottomNavDestination>(
 
 sealed class BottomNavDestination(
     val route: String,
-    val icon: ImageVector,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
     @StringRes val label: Int,
 ) {
     object Timer : BottomNavDestination(
         route = "timer",
-        icon = Icons.Outlined.Timer,
+        selectedIcon = Icons.Filled.Timer,
+        unselectedIcon = Icons.Outlined.Timer,
         label = R.string.timer
     )
 
     object Rewards : BottomNavDestination(
         route = "rewards",
-        icon = Icons.Outlined.List,
+        selectedIcon = Icons.Filled.List,
+        unselectedIcon = Icons.Outlined.List,
         label = R.string.rewards
     )
 }
