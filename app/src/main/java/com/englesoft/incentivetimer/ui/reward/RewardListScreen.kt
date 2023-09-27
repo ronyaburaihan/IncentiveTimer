@@ -3,41 +3,33 @@ package com.englesoft.incentivetimer.ui.reward
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FireExtinguisher
+import androidx.compose.material.icons.filled.MultipleStop
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.englesoft.incentivetimer.R
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.englesoft.incentivetimer.data.model.Reward
+import com.englesoft.incentivetimer.ui.reward.viewmodel.RewardViewModel
 import com.englesoft.incentivetimer.ui.theme.IncentiveTimerTheme
-import com.englesoft.incentivetimer.ui.theme.ListBottomPadding
 
 @Composable
-fun RewardListScreen() {
-    ScreenContent()
+fun RewardListScreen(rewardViewModel: RewardViewModel = hiltViewModel()) {
+    val dummyRewards by rewardViewModel.rewards.observeAsState(listOf())
+    ScreenContent(dummyRewards)
 }
 
 @Composable
-private fun ScreenContent() {
-    val dummyRewards = mutableListOf<Reward>()
-
-    repeat(100) { index ->
-        dummyRewards += Reward(
-            title = "Item $index",
-            icon = Icons.Default.Star,
-            chanceInPercent = index
-        )
-    }
+private fun ScreenContent(dummyRewards: List<Reward>) {
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -64,7 +56,13 @@ private fun ScreenContent() {
 private fun ScreenContentPreview() {
     IncentiveTimerTheme {
         Surface {
-            ScreenContent()
+            ScreenContent(
+                listOf(
+                    Reward(title = "Reward 1", icon = Icons.Default.Star, 5),
+                    Reward(title = "Reward 2", icon = Icons.Default.FireExtinguisher, 5),
+                    Reward(title = "Reward 3", icon = Icons.Default.MultipleStop, 5)
+                )
+            )
         }
     }
 }

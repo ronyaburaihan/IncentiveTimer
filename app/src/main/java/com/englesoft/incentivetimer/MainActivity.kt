@@ -1,11 +1,9 @@
 package com.englesoft.incentivetimer
 
-import android.content.res.Resources.Theme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
@@ -22,15 +20,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,7 +34,9 @@ import androidx.navigation.compose.rememberNavController
 import com.englesoft.incentivetimer.ui.reward.RewardListScreen
 import com.englesoft.incentivetimer.ui.theme.IncentiveTimerTheme
 import com.englesoft.incentivetimer.ui.timer.TimerScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +65,6 @@ private fun ScreenContent() {
         },
         bottomBar = {
             NavigationBar {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
                 bottomNavDestinations.forEachIndexed { index, bottomNavDestination ->
                     NavigationBarItem(
                         selected = selectedItemIndex == index,
@@ -99,7 +94,7 @@ private fun ScreenContent() {
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = bottomNavDestinations[0].route,
+            startDestination = bottomNavDestinations[selectedItemIndex].route,
             Modifier.padding(innerPadding)
         ) {
             composable(BottomNavDestination.Timer.route) {

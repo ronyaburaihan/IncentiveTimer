@@ -48,7 +48,10 @@ fun RewardListItem(
                     .fillMaxWidth()
             )
             Column {
-                Text(reward.title, fontWeight = FontWeight.Bold)
+                Text(
+                    reward.title,
+                    fontWeight = FontWeight.Bold
+                )
                 Text(
                     "${reward.chanceInPercent}%",
                     style = MaterialTheme.typography.bodyMedium
