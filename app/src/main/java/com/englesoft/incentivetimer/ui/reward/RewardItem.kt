@@ -17,12 +17,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.englesoft.incentivetimer.R
 import com.englesoft.incentivetimer.data.model.Reward
+import com.englesoft.incentivetimer.ui.theme.IconKeys
 import com.englesoft.incentivetimer.ui.theme.IncentiveTimerTheme
+import com.englesoft.incentivetimer.ui.theme.defaultIcon
+import com.englesoft.incentivetimer.ui.theme.rewardIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +44,7 @@ fun RewardListItem(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                reward.icon,
+                imageVector = rewardIcons[reward.iconKey] ?: defaultIcon,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
@@ -53,7 +57,7 @@ fun RewardListItem(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    "${reward.chanceInPercent}%",
+                    stringResource(id = R.string.chance) + ": ${reward.chanceInPercent}%",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -77,7 +81,7 @@ private fun ScreenContentPreview() {
             RewardListItem(
                 Reward(
                     "Hello World",
-                    Icons.Default.Star,
+                    IconKeys.CAKE,
                     5
                 )
             )

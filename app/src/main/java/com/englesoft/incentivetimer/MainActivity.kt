@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.englesoft.incentivetimer.ui.reward.RewardListScreen
 import com.englesoft.incentivetimer.ui.theme.IncentiveTimerTheme
@@ -107,7 +106,7 @@ private fun ScreenContent() {
     }
 }
 
-val bottomNavDestinations = listOf<BottomNavDestination>(
+val bottomNavDestinations = listOf(
     BottomNavDestination.Timer,
     BottomNavDestination.Rewards
 )

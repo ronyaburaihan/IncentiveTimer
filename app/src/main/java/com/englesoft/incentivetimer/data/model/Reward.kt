@@ -1,9 +1,12 @@
 package com.englesoft.incentivetimer.data.model
 
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity("rewards")
 data class Reward(
     val title: String,
-    val icon: ImageVector,
-    val chanceInPercent: Int
+    val iconKey: String,
+    val chanceInPercent: Int,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0
 )
