@@ -5,4 +5,9 @@
     <string name="timer">Timer</string>
     <string name="rewards">Rewards</string>
     <string name="chance">Chance</string>
+    <string name="add_reward">Add Reward</string>
+    <string name="update_reward">Update Reward</string>
+    <string name="save_reward">Save Reward</string>
+    <string name="reward_name">Reward Name</string>
+    <string name="close">Close</string>
 </resources>

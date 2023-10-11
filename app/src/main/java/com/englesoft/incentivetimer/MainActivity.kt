@@ -31,6 +31,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.englesoft.incentivetimer.ui.reward.RewardListScreen
+import com.englesoft.incentivetimer.ui.reward.RewardUpdateScreen
 import com.englesoft.incentivetimer.ui.theme.IncentiveTimerTheme
 import com.englesoft.incentivetimer.ui.timer.TimerScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -97,10 +98,13 @@ private fun ScreenContent() {
             Modifier.padding(innerPadding)
         ) {
             composable(BottomNavDestination.Timer.route) {
-                TimerScreen()
+                TimerScreen(navController = navController)
             }
             composable(BottomNavDestination.Rewards.route) {
-                RewardListScreen()
+                RewardListScreen(navController = navController)
+            }
+            composable(FullScreenDestinations.RewardUpdateScreen.route) {
+                RewardUpdateScreen(navController = navController)
             }
         }
     }
@@ -130,6 +134,12 @@ sealed class BottomNavDestination(
         unselectedIcon = Icons.Outlined.List,
         label = R.string.rewards
     )
+}
+
+sealed class FullScreenDestinations(
+    val route: String
+) {
+    object RewardUpdateScreen : FullScreenDestinations(route = "reward_update_screen")
 }
 
 @Preview(showBackground = true)
